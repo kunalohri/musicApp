@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+        integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>My Music librabry </title>
+</head>
+<style>
+    * {
+        padding: 0%;
+        margin: 0%;
+    }
+
+    .container {
+        width: 100vw;
+        height: 100vh;
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .box {
+        width: 250px;
+        height: 400px;
+        background-color: white;
+        border-radius: 20px;
+        box-shadow: 2px 0px 10px 2px rgb(119, 119, 119);
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-top: 30px;
+    }
+
+    .title img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        margin-top: 30px;
+        box-shadow: 2px 2px 10px 2px black;
+
+    }
+
+    .animation {
+        animation: round 10s linear infinite;
+    }
+
+    @keyframes round {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+
+    }
+    .control{
+        margin: 30px;}
+    #backward{
+        margin-right: 15px;
+        cursor: pointer;
+    }
+    #backward:hover{
+        color: red;
+    }
+    #play{
+        background-color: blueviolet;
+        padding: 10px;
+        border-radius: 30px;
+        cursor: pointer;
+    }
+    #play:hover{
+        background-color: red;
+        color: white;
+    }
+    #forward{
+        margin-left: 15px;
+        cursor: pointer;
+    }
+    #forward:hover{
+        color: red;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <div class="title">
+                <h2 id="title">One Bottle Down</h2>
+                <h4 id="author">Honey Singh</h4>
+                <img src="/my songs imgs/1.jpg" alt="" id="img">
+                <audio id="one" src="/my songs/1.mp3"></audio>
+                <div class="control">
+                    <i class="fas fa-backward" id="backward"></i>
+                    <i class="fas fa-play" id="play" ></i>
+                    <i class="fas fa-forward" id="forward"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    const audio = document.getElementById("one");
+    const image = document.getElementById("img");
+    const play =  document.getElementById("play");
+    let author = document.getElementById("author");
+    let title = document.getElementById("title");
+    let backward =  document.getElementById("backward");
+    let forward =   document.getElementById("forward");
+    let listen = true;
+
+    const songs = [
+        {
+        name: "1",
+        title:"One Bottle Down",
+        author:"Honey Singh"
+    },
+    {
+        name: "2",
+        title:"Red Eyes",
+        author:"Karan Aujla"
+    },
+    {
+        name: "3",
+        title:"Khyaal Rakhya Kar",
+        author:"Neha Kakkar",
+    },
+    {
+        name: "4",
+        title:"Talja",
+        author:"Jassa Dhillon"
+    },
+    {
+        name: "5",
+        title:"Sira E Hou",
+        author:"Amrit Maan and Nimrat Khaira",
+    },
+    {
+        name: "6",
+        title:"Khabhi Seat",
+        author:"Ammy Virk",
+    }
+
+
+]
+    
+    function playsong(){
+        listen = false;
+        audio.play();
+        image.classList.add("animation");
+        play.classList.replace("fa-play", "fa-pause");
+    }
+    function pausesong(){
+        listen = true;
+        audio.pause();
+        image.classList.remove("animation");
+        play.classList.replace("fa-pause", "fa-play");
+    }
+    play.addEventListener("click", () => {
+        if (listen== true){
+            playsong();
+        }else{
+            pausesong();
+        }
+    })
+
+
+   const loadSong = (songs) =>{
+       title.textContent = songs.title;
+       author.textContent = songs.author;
+       one.src = "my songs/"+ songs.name + ".mp3";
+       img.src = "my songs imgs/" + songs.name + ".jpg";
+   }
+   SongIndex=0;
+  
+   const nextsongs = () =>{
+    SongIndex = (SongIndex + 1)% songs.length;
+    loadSong(songs[SongIndex]);
+
+   }
+   const prevsong = () =>{
+    SongIndex = (SongIndex - 1)% songs.length;
+    loadSong(songs[SongIndex]);
+
+   }
+   backward.addEventListener("click",prevsong);
+   forward.addEventListener("click",nextsongs);
+</script>
+</body>
+
+</html>
